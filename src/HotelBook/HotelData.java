@@ -1,21 +1,38 @@
 package HotelBook;
-import java.util.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class HotelData {
-    public  List<Hotel> storeAllHotels(){
+
+    public List<Hotel> storeAllHotels()
+    {
+        List<Hotel> hotels=new ArrayList<Hotel>();
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection  connection=DriverManager.getConnection
+                    ("jdbc:mysql://localhost:3306/Vaibhav", "root","vaib@2204");
+            Statement statement=connection.createStatement();
+            ResultSet set=statement.executeQuery("SELECT * FROM hotel;");
+            while(set.next())
+            {
+                Hotel hotel=new Hotel(set.getInt(1), set.getString(2), set.getString(3), set.getInt(4));
+                hotels.add(hotel);
+            }
 
 
-    Hotel h1=new Hotel(1,"PARADISE","l1",8000);
-    Hotel h2=new Hotel(2,"Sarovar","l1",10000);
-    Hotel h3=new Hotel(3,"Opulent","l1",12000);
 
-    List<Hotel> hotels=new ArrayList<Hotel>();
-    hotels.add(h1);
-        hotels.add(h2);
-        hotels.add(h3);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
         return hotels;
-
 
     }
 }

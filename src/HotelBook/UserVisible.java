@@ -1,34 +1,69 @@
 package HotelBook;
-import java.util.*;
-
 
 import java.util.List;
+import java.util.Scanner;
 
 public class UserVisible {
-    static void main() {
-        Scanner sc=new Scanner(System.in);
-        int total=1111;
+    static HotelData data=new HotelData();
+    static List<Hotel> list=data.storeAllHotels();
+    public static List<Hotel> avaiableHotels()
 
-        HotelData hd=new HotelData();
-        System.out.println("Available Hotels");
-        List<Hotel> list=hd.storeAllHotels();
-        for (Hotel h:list){
+    {
+
+        System.out.println("Avaibale Hotels are");
+
+
+        for(Hotel h:list)
+        {
             System.out.println(h.getName()+" "+h.getPrice());
         }
-        System.out.println("Enter your preferred hotel");
-        String hot1=sc.nextLine();
-        System.out.println("How many days u going to stay there ?");
-        int days=sc.nextInt();
-        for(Hotel h:list){
-            if(h.getName().equals(hot1)){
-                total=h.getPrice()*days;
+        return list;
+    }
+    public static float enterUserData()
+    {
+
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Enter hotel name ");
+        String name=scanner.next();
+        System.out.println("Enter how many days ");
+        int days=scanner.nextInt();
+        float bill=0.0f;
+        for(Hotel hh:list)
+        {
+            if(hh.getName().equals(name))
+            {
+                bill=hh.getPrice()*days;
 
             }
-
         }
-        System.out.println("Your total amount for "+days+"days would be "+total);
-        System.out.println("Would you like to Choose this as your stay ?");
-        String y=sc.next();
+
+
+
+
+        System.out.println("Total bill is = "+bill);
+
+        System.out.println("Would you like to go with this ?");
+        String agree=scanner.next();
+        if(agree.equals("Y"))
+        {
+            System.out.println("Final bill="+bill);
+            System.exit(1);
+        }
+        else
+        {
+            UserVisible.enterUserData();
+        }
+        return bill;
+
+
+
+
+
+
+
+
+
+
 
 
     }
